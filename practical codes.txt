@@ -1,0 +1,1607 @@
+//  1. Write a program to store roll numbers of students in an array who attended a training program
+//  in random order. Write a function for searching whether a particular student attended a training
+
+//  program or not, using linear search
+
+#include<iostream>
+ using namespace std;
+
+ void linear(int arr[],int n,int key){
+    for(int i=0;i<n;i++){
+        if(arr[i]==key){
+            cout<<"student attend the training"<<endl;
+            return;
+        }
+    }
+    cout<<"student did not attend the training"<<endl;
+ }
+ int main(){
+    int n;
+    cout<<"enter the numbe's of student"<<endl;
+    cin>>n;
+    cout<<"enter the roll numbers"<<endl;
+    int arr[n];
+    for(int i=0;i<n;i++){
+        cin>>arr[i];
+    }
+    int key;
+    cout<<"enter roll number to cheak present or not"<<endl;
+    cin>>key;
+    linear(arr,n,key);
+
+    return 0;
+ }
+
+/* 2 .Write a program to store roll numbers of student arrays who attended training programs in
+sorted order. Write a function for searching whether a particular student attended a training
+
+program or not, using binary search.*/
+#include<iostream>
+using namespace std;
+
+void binery(int arr[],int n,int key){
+    int st=0;
+    int end=n-1;
+    while(st<=end){
+        int mid=st+(end-st)/2;
+        if(arr[mid]==key){
+            cout<<"yes student attend the training"<<endl;
+            return;
+
+        }
+        else if(arr[mid]<key){
+            st=mid+1;
+        }
+        else{
+            end=mid-1;
+        }
+    }
+    cout<<"not attend the training"<<endl;
+}
+int main(){
+    int n;
+    cout<<"enter the number of student"<<endl;
+    cin>>n;
+    cout<<"enter the roll numbers of students"<<endl;
+    int arr[n];
+    for(int i=0;i<n;i++){
+        cin>>arr[i];
+        
+    }
+    int key;
+    cout<<"enter the student roll number"<<endl;
+    cin>>key;
+    binery(arr,n,key);
+    return 0;
+}
+
+
+
+// 3. Write a program to store the first year percentage of students in an array. Write function for
+// sorting array of floating point numbers in ascending order using - Selection Sort and display
+
+// top five scores
+
+#include<iostream>
+using namespace std;
+
+void selection(float arr[],int n){
+    for(int i=0;i<n-1;i++){
+        int si=i;
+        for(int j=i+1;j<n;j++){
+            if(arr[j]<=arr[si]){
+                si=j;
+            }
+        }
+        swap(arr[i],arr[si]);
+    }
+}
+void display(float arr[],int n){
+    cout<<"student percentage in asending order"<<endl;
+    for(int i=0;i<n;i++){
+        cout<<arr[i]<<" ";
+    }
+    cout<<endl;
+    cout<<"top five scores"<<endl;
+    for(int i=n-1;i>=0 && i>=n-5;i--){
+        cout<<arr[i]<<" ";
+    }
+    cout<<endl;
+}
+int main(){
+    int n;
+    cout<<"enter the number of percentages"<<endl;
+    cin>>n;
+    float arr[n];
+    cout<<"enter the percentages"<<endl;
+    for(int i=0;i<n;i++){
+        cin>>arr[i];
+    }
+    selection(arr,n);
+    display(arr,n);
+    return 0;
+    
+}
+
+
+
+// 4. Write a program to store the first year percentage of students in an array. Write function for
+// sorting array of floating point numbers in ascending order using Bubble sort and display top
+
+// five scores.
+
+#include<iostream>
+using namespace std;
+
+    void Bubble(float arr[],int n){
+        cout<<"student percentage in asending order"<<endl;
+        for(int i=0;i<n-1;i++){
+            for(int j=0;j<n-1-i;j++){
+                if(arr[j]>arr[j+1]){
+                    swap(arr[j],arr[j+1]);
+                }
+
+            }
+        }
+    }
+    void display(float arr[],int n){
+        cout<<"pecentage in asending order"<<endl;
+        for(int i=0;i<n;i++){
+            cout<<arr[i]<<" ";
+
+        }
+        cout<<endl;
+        cout<<"top five scorer"<<endl;
+        for(int i=n-1;i>=0 && i>=n-5;i--){
+            cout<<arr[i]<<" ";
+
+        }
+        cout<<endl;
+    }
+    int main(){
+        int n;
+        cout<<" how many percentages"<<endl;
+        cin>>n;
+        cout<<" enter the percentages"<<endl;
+        float arr[n];
+        for(int i=0;i<n;i++){
+            cin>>arr[i];
+        }
+        Bubble(arr,n);
+        display(arr,n);
+        return 0;
+    }
+    
+
+
+
+// 5. Consider the telephone book database of N clients. Make use of a hash table implementation to
+// quickly look up a client’s telephone number. Make use of linear probing collision handling
+
+// techniques.
+
+#include<iostream>
+using namespace std;
+
+#define size 10
+struct client{
+    string name;
+    long long phone;
+};
+
+void insert(client table[],string name,long long phone){
+    int index= phone % size;
+
+    while(table[index].phone != -1){
+        index=(index +1)% size;
+
+    }
+    table[index].name=name;
+    table[index].phone=phone;
+
+}
+
+void search(client table[],long long phone){
+    int index=phone % size;
+    int start=index;
+
+    while(table[index].phone != -1){
+        if(table[index].phone == phone){
+            cout<<"client found at"<<endl;
+            cout<<"client name "<<table[index].name<<endl;
+            cout<<"client phone "<<table[index].phone<<endl;
+            return;
+        }
+        index=(index + 1) % size;
+        if(index == start){
+            break;
+        }
+
+    }
+    cout<<"client not found"<<endl;
+
+}
+
+void display(client table[]){
+    cout<<"\n telephone book \n"<<endl;
+    for(int i=0;i<size;i++){
+        if(table[i].phone != -1){
+            cout<<i<<"-->"
+                <<table[i].name<<"  "
+                <<table[i].phone<<endl;
+
+        }
+        else{
+            cout<<i<<"-->is empty"<<endl;
+        }
+    }
+}
+
+int main(){
+    client table[size];
+    for(int i=0;i<size;i++){
+        table[i].phone=-1;
+    }
+    int n;
+    cout<<"enter the number of client"<<endl;
+    cin>>n;
+
+    for(int i=0;i<n;i++){
+        string name;
+        long long phone;
+
+        cout<<"enter the client name"<<endl;
+        cin>>name;
+
+        cout<<"enter theclient phone number"<<endl;
+        cin>>phone;
+
+        insert(table,name ,phone);
+    }
+    display(table);
+
+    long long key;
+    cout<<"enter the phone number to search"<<endl;
+    cin>>key;
+    search(table,key);
+    return 0;
+}
+
+// 6. Consider the telephone book database of N clients. Make use of a hash table implementation to
+// quickly look up a client’s telephone number. Make use of double hashing collision handling
+
+// techniques.
+
+#include<iostream>
+using namespace std;
+
+#define size 10
+struct client{
+    string name;
+    long long phone;
+};
+
+void insert(client table[],string name,long long phone){
+    int i=0;
+    int h1=phone % size;
+    int h2=(7-phone) % size;
+    int index= (h1 +i*h2) % size;
+
+    while(table[index].phone != -1){
+        int index= h1 +(i*h2) % size;
+        i++;
+        
+
+    }
+    table[index].name=name;
+    table[index].phone=phone;
+
+}
+
+void search(client table[],long long phone){
+    int i=0;
+    int h1=phone % size;
+    int h2=(7-phone) % size;
+    int index= (h1 +i*h2) % size;
+    int start=index;
+
+    while(table[index].phone != -1){
+        if(table[index].phone == phone){
+            cout<<"client found at"<<endl;
+            cout<<"client name "<<table[index].name<<endl;
+            cout<<"client phone "<<table[index].phone<<endl;
+            return;
+        }
+        index= (h1 +i*h2) % size;
+        if(index == start){
+            break;
+        }
+
+    }
+    cout<<"client not found"<<endl;
+
+}
+
+void display(client table[]){
+    cout<<"\n telephone book \n"<<endl;
+    for(int i=0;i<size;i++){
+        if(table[i].phone != -1){
+            cout<<i<<"-->"
+                <<table[i].name<<"  "
+                <<table[i].phone<<endl;
+
+        }
+        else{
+            cout<<i<<"-->is empty"<<endl;
+        }
+    }
+}
+
+int main(){
+    client table[size];
+    for(int i=0;i<size;i++){
+        table[i].phone=-1;
+    }
+    int n;
+    cout<<"enter the number of client"<<endl;
+    cin>>n;
+
+    for(int i=0;i<n;i++){
+        string name;
+        long long phone;
+
+        cout<<"enter the client name"<<endl;
+        cin>>name;
+
+        cout<<"enter theclient phone number"<<endl;
+        cin>>phone;
+
+        insert(table,name ,phone);
+    }
+    display(table);
+
+    long long key;
+    cout<<"enter the phone number to search"<<endl;
+    cin>>key;
+    search(table,key);
+    return 0;
+}
+
+
+
+// 7. Consider the telephone book database of N clients. Make use of a hash table implementation to
+// quickly look up a client’s telephone number. Make use of quadratic collision handling
+
+// techniques.
+#include<iostream>
+using namespace std;
+
+#define size 10
+
+struct client{
+    string name;
+    long long phone;
+};
+
+void insert(client table[],string name,long long phone){
+    int index= phone % size;
+    int i=0;
+
+    while(table[index].phone != -1 && i<size){
+        i++;
+        index=((phone % size) + i*i) % size;
+    }
+
+    if(table[index].phone != -1){
+        cout<<"hash table is full"<<endl;
+        return;
+    }
+
+    table[index].name=name;
+    table[index].phone=phone;
+}
+
+void search(client table[],long long phone){
+    int index=phone % size;
+    int i=0;
+
+    while(table[index].phone != -1 && i<size){
+        if(table[index].phone == phone){
+            cout<<"client found at "<<index<<endl;
+            cout<<"client name "<<table[index].name<<endl;
+            cout<<"client phone "<<table[index].phone<<endl;
+            return;
+        }
+
+        i++;
+        index=((phone % size) + i*i) % size;
+    }
+
+    cout<<"client not found"<<endl;
+}
+
+void display(client table[]){
+    cout<<"\n telephone book \n"<<endl;
+
+    for(int i=0;i<size;i++){
+        if(table[i].phone != -1){
+            cout<<i<<"-->"
+                <<table[i].name<<"  "
+                <<table[i].phone<<endl;
+        }
+        else{
+            cout<<i<<"-->is empty"<<endl;
+        }
+    }
+}
+
+int main(){
+    client table[size];
+
+    for(int i=0;i<size;i++){
+        table[i].phone=-1;
+    }
+
+    int n;
+    cout<<"enter the number of client"<<endl;
+    cin>>n;
+
+    for(int i=0;i<n;i++){
+        string name;
+        long long phone;
+
+        cout<<"enter the client name"<<endl;
+        cin>>name;
+
+        cout<<"enter the client phone number"<<endl;
+        cin>>phone;
+
+        insert(table,name,phone);
+    }
+
+    display(table);
+
+    long long key;
+    cout<<"enter the phone number to search"<<endl;
+    cin>>key;
+
+    search(table,key);
+
+    return 0;
+}
+
+
+
+// 8. The Department of Computer Engineering has a student’s club named ’Pinnacle Club’.
+// Students of the second, third and final year of the department can be granted membership on
+// request. Similarly one may cancel the membership of the club. First node is reserved for the
+// president of the club and the last node is reserved for the secretary of the club. Write a program
+// to maintain club member‘s information using singly linked lists. Store student PRN and Name.
+
+// Write functions to:
+
+// a) Add members as well as a president and secretary. b) Compute the total number of members
+
+// of the club. c) Display members.
+
+
+#include<iostream>
+using namespace std;
+
+struct node{
+    int prn;
+    string name;
+    node*next;
+};
+
+void insert(node* &head,node* &tail,int prn,string name,int pos){
+    node* newnode= new node();
+
+    newnode->prn=prn;
+    newnode->name=name;
+    newnode->next=NULL;
+
+    if(head==NULL){
+        head=tail=newnode;
+        return;
+    }
+    if(pos==1){
+        newnode->next=head;
+        head=newnode;
+        return;
+    }
+    if(pos==3){
+        tail->next=newnode;
+        tail=newnode;
+        return;
+    }
+    if(head==tail){
+        newnode->next=tail;
+        head->next=newnode;
+        return;
+    }
+
+    node* temp=head;
+
+    while(temp->next!=tail){
+        temp=temp->next;
+    }
+    newnode->next=tail;
+    temp->next=newnode;
+}
+void count(node* head){
+    int c=0;
+    node* temp=head;
+
+    while(temp!=NULL){
+        c++;
+        temp=temp->next;
+    }
+    cout<<"total member"<<c<<endl;
+}
+
+void display(node* head,node* tail){
+    node* temp=head;
+
+    if(head==NULL){
+        cout<<"club is empty"<<endl;
+        return;
+    }
+
+    while(temp!=NULL){
+        cout<<"prn"<<temp->prn<<endl;
+        cout<<"name"<<temp->name<<endl;
+
+        if(temp==head){
+            cout<<"precident"<<endl;
+
+        }
+        else if(temp==tail){
+            cout<<"secretary"<<endl;
+        }
+        else{
+            cout<<"member"<<endl;
+
+        }
+        cout<<"--------"<<endl;
+            temp=temp->next;
+        
+    }
+}
+
+int main(){
+    node* head=NULL;
+    node* tail=NULL;
+
+    int ch,prn,pos;
+    string name;
+
+    while(1){
+        cout<<"\n1. add precident";
+        cout<<"\n2. add member";
+        cout<<"\n3. add secretary";
+        cout<<"\n4. count member";
+        cout<<"\n5. dispay";
+        cout<<"\n6. exit";
+        
+        cout<<"\n enter choice:";
+        cin>>ch;
+
+        if(ch==1){
+            cout<<"enter prn and name:";
+            cin>>prn>>name;
+
+            insert(head,tail,prn,name,1);
+        }
+        else if(ch==2){
+            cout<<"enter the prn and name:";
+
+            cin>>prn>>name;
+            insert(head,tail,prn,name,2);
+        }
+        else if(ch==3){
+            cout<<"enter the prn and name:";
+            cin>>prn>>name;
+            insert(head,tail,prn,name,3);
+        }
+        else if(ch==4){
+            count(head);
+        }
+        else if(ch==5){
+            display(head,tail);
+        }
+        else if(ch==6){
+            return 0;
+
+        }
+        else{
+            cout<<"invalid choice"<<endl;
+        }
+        
+
+    }
+    return 0;
+}
+    
+
+// 9. The Department of Computer Engineering has a student’s club named ’Pinnacle Club’.
+// Students of the second, third and final year of the department can be granted membership on
+// request. Similarly one may cancel the membership of the club. First node is reserved for the
+// president of the club and the last node is reserved for the secretary of the club. Write a program
+// to maintain club member‘s information using singly linked lists. Store student PRN and Name.
+
+// Write functions to:
+
+// a) Delete the members as well as the president or even the secretary. b) Display
+
+// members
+
+// c) Two linked lists exist for two divisions. Concatenate two lists.
+
+#include<iostream>
+using namespace std;
+
+struct node{
+    int prn;
+    string name;
+    node* next;
+};
+
+void insert(node* &head,node* &tail,int prn,string name){
+    node* newnode=new node();
+
+    newnode->prn=prn;
+    newnode->name=name;
+    newnode->next=NULL;
+
+    if(head==NULL){
+        head=tail=newnode;
+        return;
+    }
+
+    tail->next=newnode;
+    tail=newnode;
+}
+
+void deleteMember(node* &head,node* &tail,int prn){
+    if(head==NULL){
+        cout<<"club is empty"<<endl;
+        return;
+    }
+
+    node* temp=head;
+    node* prev=NULL;
+
+    while(temp!=NULL && temp->prn!=prn){
+        prev=temp;
+        temp=temp->next;
+    }
+
+    if(temp==NULL){
+        cout<<"member not found"<<endl;
+        return;
+    }
+
+    if(temp==head){
+        head=head->next;
+
+        if(head==NULL){
+            tail=NULL;
+        }
+
+        delete temp;
+        cout<<"member deleted"<<endl;
+        return;
+    }
+
+    prev->next=temp->next;
+
+    if(temp==tail){
+        tail=prev;
+    }
+
+    delete temp;
+    cout<<"member deleted"<<endl;
+}
+
+void display(node* head){
+    node* temp=head;
+
+    if(head==NULL){
+        cout<<"club is empty"<<endl;
+        return;
+    }
+
+    while(temp!=NULL){
+        cout<<"prn: "<<temp->prn<<endl;
+        cout<<"name: "<<temp->name<<endl;
+
+        if(temp==head){
+            cout<<"president"<<endl;
+        }
+        else{
+            cout<<"member"<<endl;
+        }
+
+        cout<<"-------"<<endl;
+        temp=temp->next;
+    }
+}
+
+void concatenate(node* &head1,node* &tail1,node* &head2,node* &tail2){
+    if(head1==NULL){
+        head1=head2;
+        tail1=tail2;
+    }
+    else if(head2!=NULL){
+        tail1->next=head2;
+        tail1=tail2;
+    }
+
+    head2=NULL;
+    tail2=NULL;
+
+    cout<<"two lists concatenated"<<endl;
+}
+
+int main(){
+    node* head1=NULL;
+    node* tail1=NULL;
+
+    node* head2=NULL;
+    node* tail2=NULL;
+
+    int ch,prn,n;
+    string name;
+
+    cout<<"enter the number of member in division 1: ";
+    cin>>n;
+
+    for(int i=0;i<n;i++){
+        cout<<"enter the prn and name: ";
+        cin>>prn>>name;
+        insert(head1,tail1,prn,name);
+    }
+
+    cout<<"enter the number of member in division 2: ";
+    cin>>n;
+
+    for(int i=0;i<n;i++){
+        cout<<"enter the prn and name: ";
+        cin>>prn>>name;
+        insert(head2,tail2,prn,name);
+    }
+
+    while(1){
+        cout<<"\n1. Delete Member";
+        cout<<"\n2. Display Division 1";
+        cout<<"\n3. Display Division 2";
+        cout<<"\n4. Concatenate Lists";
+        cout<<"\n5. Display Combined List";
+        cout<<"\n6. Exit";
+
+        cout<<"\nEnter choice: ";
+        cin>>ch;
+
+        if(ch==1){
+            cout<<"Enter PRN to delete: ";
+            cin>>prn;
+            deleteMember(head1,tail1,prn);
+        }
+
+        else if(ch==2){
+            display(head1);
+        }
+
+        else if(ch==3){
+            display(head2);
+        }
+
+        else if(ch==4){
+            concatenate(head1,tail1,head2,tail2);
+        }
+
+        else if(ch==5){
+            display(head1);
+        }
+
+        else if(ch==6){
+            return 0;
+        }
+
+        else{
+            cout<<"Invalid choice"<<endl;
+        }
+    }
+
+    return 0;
+}
+
+
+
+
+// 10. The ticket booking system of Cinemax theater has to be implemented. There are 10 rows and 7
+// seats in each row. Doubly linked list has to be maintained to keep track of free seats in rows.
+// Assume some random booking to start with. Use an array to store pointers (Head pointer) to
+
+// each row. On demand
+// a) The list of available seats is to be displayed
+// b) The booking can be cancelled.
+
+#include<iostream>
+using namespace std;
+
+struct node{
+    int seat;
+    node* prev;
+    node* next;
+
+};
+
+//add a free seat in sorted order
+void insert(node* &head,int seat){
+    node* newnode=new node();
+
+    newnode->seat=seat;
+    newnode->prev=NULL;
+    newnode->next=NULL;
+
+    if(head==NULL){
+        head=newnode;
+        return;
+
+    }
+    if(seat<head->seat){
+        newnode->next=head;
+        head->prev=newnode;
+        head=newnode;
+        return ;
+
+    }
+    node* temp=head;
+
+    while(temp->next!=NULL && temp->next->seat<seat){
+        temp=temp->next;
+
+    }
+    if(temp->seat==seat || (temp->next!=NULL && temp->next->seat==seat)){
+        delete newnode;
+        return;
+    }
+    newnode->next=temp->next;
+    newnode->prev=temp;
+
+    if(temp->next!=NULL){
+        temp->next->prev=newnode;
+    }
+    temp->next=newnode;
+}
+//remove a booked seat from free seat list
+void book (node* &head,int seat){
+    node*temp=head;
+
+    while(temp!=NULL && temp->seat!=seat){
+        temp=temp->next;
+    }
+    if(temp==NULL){
+        return;
+    }
+    if(temp==head){
+        head=head->next;
+    }
+    if(temp->prev!=NULL){
+        temp->prev->next=temp->next;
+    }
+    delete temp;
+}
+//display available seat
+void display(node* head[],int rows){
+    for(int i=0;i<rows;i++){
+        cout<<"\nrow"<<i+1<<": ";
+
+        node* temp=head[i];
+
+        if(temp==NULL){
+            cout<<"no seats available";
+        }
+        while(temp!=NULL){
+            cout<<temp->seat<<" ";
+            temp=temp->next;
+        }
+        cout<<endl;
+    }
+}
+//cansel booking and add seat again
+void cansel(node*head[],int row,int seat){
+    if(row<1 || row>10 || seat<1 || seat>7){
+        cout<<"invalid row or seat number"<<endl;
+        return ;
+    }
+    node* temp=head[row-1];
+    while(temp!=NULL){
+        if(temp->seat==seat){
+            cout<<"seat is already available"<<endl;
+            return;
+        }
+        temp=temp->next;
+    }
+    insert(head[row-1],seat);
+    cout<<"booking cancelled successfullly"<<endl;
+
+}
+int main(){
+    node* head[10];
+    for(int i=0;i<10;i++){
+        head[i]=NULL;
+    }
+    //initially all seat are free
+    for(int i=0;i<10;i++){
+        for(int j=1;j<=7;j++){
+            insert(head[i],j);
+        }
+    }
+    //some random booking
+    book(head[0],2);
+    book(head[0],5);
+    book(head[1],3);
+    book(head[2],1);
+    book(head[2],6);
+    book(head[4],4);
+    book(head[6],2);
+    book(head[8],7);
+
+    int ch,row,seat;
+    while(1){
+        cout<<"\n1. Display Available Seats";
+        cout<<"\n2. Cancel Booking";
+        cout<<"\n3. Exit";
+
+        cout<<"\nEnter choice: ";
+        cin>>ch;
+
+        if(ch==1){
+            display(head,10);
+        }
+
+        else if(ch==2){
+            cout<<"Enter row number: ";
+            cin>>row;
+
+            cout<<"Enter seat number: ";
+            cin>>seat;
+
+            cansel(head,row,seat);
+        }
+
+        else if(ch==3){
+            return 0;
+        }
+
+        else{
+            cout<<"Invalid choice"<<endl;
+        }
+    }
+
+    return 0;
+}
+
+
+// 11. In any language program, most syntax errors occur due to unbalanced delimiters such as (), {},
+// []. Write a program using a stack to check whether a given expression is well parenthesized or
+
+// not.
+
+
+
+#include<iostream>
+#include<stack>
+using namespace std;
+
+class solution{
+
+public:
+    bool isvalid(string str){
+        stack<char>st;
+
+        for(int i=0;i<str.size();i++){
+            if(str[i]=='(' || str[i]=='[' || str[i]=='{'){
+                st.push(str[i]);
+            }
+            else{
+                if(st.size()==0){
+                    return false;
+                }
+
+                if((st.top()=='(' && str[i]==')') ||
+                   (st.top()=='[' && str[i]==']') ||
+                   (st.top()=='{' && str[i]=='}')){
+                    st.pop();
+                }
+                else{
+                    return false;
+                }
+            }
+        }
+
+        return st.size()==0;
+    }
+};
+
+int main(){
+    solution s;
+    string str;
+
+    cout<<"enter the statement "<<endl;
+    cin>>str;
+
+    if(s.isvalid(str)){
+        cout<<"is valid"<<endl;
+    }
+    else{
+        cout<<"not valid"<<endl;
+    }
+
+    return 0;
+}
+
+
+
+// 12. Pizza parlor accepting maximum M orders. Orders are served on a first-come, first-served
+// basis. Queues are frequently used in computer programming, and a typical example is the
+// creation of a job queue by an operating system. If the operating system does not use priorities,
+// then the jobs are processed in the order they enter the system. Write a program for simulating a
+// job queue. Write functions to add jobs and delete jobs from the queue.
+
+#include<iostream>
+using namespace std;
+
+#define M 5
+
+struct queue{
+    int order[M];
+    int front;
+    int rear;
+};
+
+//add order
+void insert(queue &q,int x){
+    if(q.rear==M-1){
+        cout<<"Queue is full"<<endl;
+        return;
+    }
+
+    if(q.front==-1){
+        q.front=0;
+    }
+
+    q.rear++;
+    q.order[q.rear]=x;
+}
+
+//delete order
+void del(queue &q){
+    if(q.front==-1){
+        cout<<"Queue is empty"<<endl;
+        return;
+    }
+
+    cout<<"Deleted order: "<<q.order[q.front]<<endl;
+
+    if(q.front==q.rear){
+        q.front=-1;
+        q.rear=-1;
+    }
+    else{
+        q.front++;
+    }
+}
+
+//display order
+void display(queue q){
+    if(q.front==-1){
+        cout<<"Queue is empty"<<endl;
+        return;
+    }
+
+    for(int i=q.front;i<=q.rear;i++){
+        cout<<q.order[i]<<" ";
+    }
+
+    cout<<endl;
+}
+
+int main(){
+    queue q;
+
+    q.front=-1;
+    q.rear=-1;
+
+    int ch,x;
+
+    while(1){
+        cout<<"\n1. Insert order";
+        cout<<"\n2. Delete order";
+        cout<<"\n3. Display order";
+        cout<<"\n4. Exit";
+
+        cout<<"\nEnter choice: ";
+        cin>>ch;
+
+        if(ch==1){
+            cout<<"Enter order number: ";
+            cin>>x;
+
+            insert(q,x);
+        }
+        else if(ch==2){
+            del(q);
+        }
+        else if(ch==3){
+            display(q);
+        }
+        else if(ch==4){
+            return 0;
+        }
+        else{
+            cout<<"Invalid choice"<<endl;
+        }
+    }
+
+    return 0;
+}
+
+
+
+//  13 .Beginning with an empty binary search tree, Construct a binary search tree by inserting the
+
+// values in the order given. After constructing a binary tree -
+// 1. Insert new node.
+
+// 2. Find number of nodes in the longest path from the root.
+// 3. Minimum data value found in the tree
+
+
+#include<iostream>
+using namespace std;
+
+struct node{
+    int data;
+    node* left;
+    node* right;
+};
+
+//insert node
+node* insert(node* root,int val){
+
+    if(root==NULL){
+        node* newnode=new node();
+        newnode->data=val;
+        newnode->left=NULL;
+        newnode->right=NULL;
+        return newnode;
+    }
+
+    if(val<root->data){
+        root->left=insert(root->left,val);
+    }
+    else if(val>root->data){
+        root->right=insert(root->right,val);
+    }
+
+    return root;
+}
+
+//find height (longest path)
+int height(node* root){
+    if(root==NULL){
+        return 0;
+    }
+
+    int left=height(root->left);
+    int right=height(root->right);
+
+    if(left>right){
+        return left+1;
+    }
+    else{
+        return right+1;
+    }
+}
+
+//find minimum value
+int minimum(node* root){
+    if(root==NULL){
+        return -1;
+    }
+
+    while(root->left!=NULL){
+        root=root->left;
+    }
+
+    return root->data;
+}
+
+//display inorder
+void inorder(node* root){
+    if(root==NULL){
+        return;
+    }
+
+    inorder(root->left);
+    cout<<root->data<<" ";
+    inorder(root->right);
+}
+
+int main(){
+
+    node* root=NULL;
+    int n,val,ch;
+
+    cout<<"Enter number of nodes: ";
+    cin>>n;
+
+    cout<<"Enter values: ";
+
+    for(int i=0;i<n;i++){
+        cin>>val;
+        root=insert(root,val);
+    }
+
+    while(1){
+
+        cout<<"\n1. Insert new node";
+        cout<<"\n2. Longest path from root";
+        cout<<"\n3. Minimum value";
+        cout<<"\n4. Display BST";
+        cout<<"\n5. Exit";
+
+        cout<<"\nEnter choice: ";
+        cin>>ch;
+
+        if(ch==1){
+            cout<<"Enter value: ";
+            cin>>val;
+
+            root=insert(root,val);
+        }
+        else if(ch==2){
+            cout<<"Longest path: "<<height(root)<<endl;
+        }
+        else if(ch==3){
+            cout<<"Minimum value: "<<minimum(root)<<endl;
+        }
+        else if(ch==4){
+            cout<<"BST: ";
+            inorder(root);
+            cout<<endl;
+        }
+        else if(ch==5){
+            return 0;
+        }
+        else{
+            cout<<"Invalid choice"<<endl;
+        }
+    }
+
+    return 0;
+}
+
+
+
+//  14. Beginning with an empty binary search tree, Construct a binary search tree by inserting the
+
+// values in the order given. After constructing a binary tree—
+
+// 1. Insert new node
+
+// 2. Change a tree so that the roles of the left and right pointers are swapped
+
+// at every node.
+// 3. Search for a value.
+
+#include<iostream>
+using namespace std;
+
+struct node{
+    int data;
+    node* left;
+    node* right;
+};
+
+//insert new node
+node* insert(node* root,int val){
+
+    if(root==NULL){
+        node* newnode=new node();
+
+        newnode->data=val;
+        newnode->left=NULL;
+        newnode->right=NULL;
+
+        return newnode;
+    }
+
+    if(val<root->data){
+        root->left=insert(root->left,val);
+    }
+    else if(val>root->data){
+        root->right=insert(root->right,val);
+    }
+
+    return root;
+}
+
+//mirror tree
+void mirror(node* root){
+
+    if(root==NULL){
+        return;
+    }
+
+    node* temp=root->left;
+    root->left=root->right;
+    root->right=temp;
+
+    mirror(root->left);
+    mirror(root->right);
+}
+
+//search value
+bool search(node* root,int key){
+
+    if(root==NULL){
+        return false;
+    }
+
+    if(root->data==key){
+        return true;
+    }
+
+    if(key<root->data){
+        return search(root->left,key);
+    }
+    else{
+        return search(root->right,key);
+    }
+}
+
+//inorder traversal
+void inorder(node* root){
+
+    if(root==NULL){
+        return;
+    }
+
+    inorder(root->left);
+    cout<<root->data<<" ";
+    inorder(root->right);
+}
+
+int main(){
+
+    node* root=NULL;
+    int n,val,ch;
+
+    cout<<"Enter number of nodes: ";
+    cin>>n;
+
+    cout<<"Enter values: ";
+
+    for(int i=0;i<n;i++){
+        cin>>val;
+        root=insert(root,val);
+    }
+
+    while(1){
+
+        cout<<"\n1. Insert new node";
+        cout<<"\n2. Mirror tree";
+        cout<<"\n3. Search value";
+        cout<<"\n4. Display tree";
+        cout<<"\n5. Exit";
+
+        cout<<"\nEnter choice: ";
+        cin>>ch;
+
+        if(ch==1){
+            cout<<"Enter value: ";
+            cin>>val;
+
+            root=insert(root,val);
+        }
+        else if(ch==2){
+            mirror(root);
+            cout<<"Tree mirrored successfully"<<endl;
+        }
+        else if(ch==3){
+            cout<<"Enter value to search: ";
+            cin>>val;
+
+            if(search(root,val)){
+                cout<<"Value found"<<endl;
+            }
+            else{
+                cout<<"Value not found"<<endl;
+            }
+        }
+        else if(ch==4){
+            cout<<"Inorder: ";
+            inorder(root);
+            cout<<endl;
+        }
+        else if(ch==5){
+            return 0;
+        }
+        else{
+            cout<<"Invalid choice"<<endl;
+        }
+    }
+
+    return 0;
+}
+    
+
+
+// 15. There are flight paths between cities. If there is a flight between city A and city B then there is
+// an edge between the cities. The cost of the edge can be the time that flight takes to reach city B
+// from A or the amount of fuel used for the journey. Represent this as a graph. The node can be
+// represented by the airport name or name of the city. Use adjacency list representation of the
+
+// graph .Check whether the graph is connected or not.
+
+
+
+#include<iostream>
+#include<vector>
+using namespace std;
+
+#define N 5
+
+vector<pair<int,int>> adj[N];
+bool visited[N];
+
+void addEdge(int u,int v,int cost){
+    adj[u].push_back({v,cost});
+    adj[v].push_back({u,cost});
+}
+
+void DFS(int src){
+    visited[src]=true;
+
+    for(int i=0;i<adj[src].size();i++){
+        int v=adj[src][i].first;
+
+        if(visited[v]==false){
+            DFS(v);
+        }
+    }
+}
+
+bool isConnected(){
+    for(int i=0;i<N;i++){
+        visited[i]=false;
+    }
+
+    DFS(0);
+
+    for(int i=0;i<N;i++){
+        if(visited[i]==false){
+            return false;
+        }
+    }
+
+    return true;
+}
+
+int main(){
+
+    addEdge(0,1,2);
+    addEdge(0,2,3);
+    addEdge(1,3,4);
+    addEdge(2,4,5);
+
+    cout<<"Adjacency List:"<<endl;
+
+    for(int i=0;i<N;i++){
+        cout<<i<<" -> ";
+
+        for(int j=0;j<adj[i].size();j++){
+            cout<<"("<<adj[i][j].first<<", "
+                <<adj[i][j].second<<") ";
+        }
+
+        cout<<endl;
+    }
+
+    if(isConnected()){
+        cout<<"Graph is Connected";
+    }
+    else{
+        cout<<"Graph is Not Connected";
+    }
+
+    return 0;
+}
+
+
+
+// 16. There are flight paths between cities. If there is a flight between city A and city B then there is
+// an edge between the cities. The cost of the edge can be the time that flight takes to reach city B
+// from A or the amount of fuel used for the journey. Represent this as a graph. The node can be
+// represented by the airport name or name of the city. Use adjacency list representation of the
+
+// graph .Check whether the graph is connected or not.
+
+
+#include<iostream>
+#include<vector>
+using namespace std;
+
+#define N 5
+
+vector<pair<int,int>> adj[N];
+bool visited[N];
+
+void addEdge(int u,int v,int cost){
+    adj[u].push_back({v,cost});
+    adj[v].push_back({u,cost});
+}
+
+void DFS(int src){
+    visited[src]=true;
+
+    for(int i=0;i<adj[src].size();i++){
+        int v=adj[src][i].first;
+
+        if(visited[v]==false){
+            DFS(v);
+        }
+    }
+}
+
+bool isConnected(){
+
+    for(int i=0;i<N;i++){
+        visited[i]=false;
+    }
+
+    DFS(0);
+
+    for(int i=0;i<N;i++){
+        if(visited[i]==false){
+            return false;
+        }
+    }
+
+    return true;
+}
+
+int main(){
+
+    addEdge(0,1,2);
+    addEdge(0,2,3);
+    addEdge(1,3,4);
+    addEdge(2,4,5);
+
+    cout<<"Adjacency List:"<<endl;
+
+    for(int i=0;i<N;i++){
+        cout<<i<<" -> ";
+
+        for(int j=0;j<adj[i].size();j++){
+            cout<<"("<<adj[i][j].first<<", "
+                <<adj[i][j].second<<") ";
+        }
+
+        cout<<endl;
+    }
+
+    if(isConnected()){
+        cout<<"Graph is Connected";
+    }
+    else{
+        cout<<"Graph is Not Connected";
+    }
+
+    return 0;
+}
